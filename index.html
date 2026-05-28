@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusão de Conta — App Mundo Real</title>
+    <meta name="description" content="Solicite a exclusão da sua conta e de todos os seus dados pessoais do aplicativo Mundo Real das Lojas Mundo Real.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FDDF01;
+            --primary-dark: #D4BA00;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --bg-light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --danger: #EF4444;
+            --danger-light: rgba(239, 68, 68, 0.08);
+            --danger-border: rgba(239, 68, 68, 0.25);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-dark: #F1F5F9;
+                --text-muted: #94A3B8;
+                --bg-light: #0F172A;
+                --card-bg: #1E293B;
+                --border-color: #334155;
+                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+                --danger-light: rgba(239, 68, 68, 0.12);
+                --danger-border: rgba(239, 68, 68, 0.35);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-placeholder {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #1E293B;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(253, 223, 1, 0.3);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .last-update {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        main {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 0.75rem;
+            letter-spacing: -0.015em;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Caixa de alerta amarela (padrão do arquivo de política) */
+        .alert-box {
+            background-color: rgba(253, 223, 1, 0.1);
+            border: 1px solid rgba(253, 223, 1, 0.3);
+            border-left: 4px solid var(--primary-dark);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .alert-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            font-size: 0.975rem;
+        }
+
+        /* Caixa de aviso vermelho (para exclusão) */
+        .danger-box {
+            background-color: var(--danger-light);
+            border: 1px solid var(--danger-border);
+            border-left: 4px solid var(--danger);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .danger-box h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .danger-box p {
+            margin-bottom: 0;
+            font-size: 0.975rem;
+        }
+
+        /* Botão de e-mail de exclusão */
+        .btn-delete {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--danger);
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.875rem 1.75rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-delete:hover {
+            background-color: #DC2626;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-delete:active {
+            transform: translateY(0);
+        }
+
+        .step-list {
+            list-style: none;
+            padding-left: 0;
+            counter-reset: steps;
+        }
+
+        .step-list li {
+            counter-increment: steps;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .step-list li::before {
+            content: counter(steps);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.875rem;
+            color: #1E293B;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .btn-link {
+            color: var(--text-dark);
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+
+        .btn-link:hover {
+            color: var(--primary-dark);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            main {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .btn-delete {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-placeholder">MR</div>
+            <h1>Exclusão de Conta</h1>
+            <p class="subtitle">Aplicativo Móvel Mundo Real — Lojas Mundo Real</p>
+            <p class="last-update">Última atualização: 28 de maio de 2026</p>
+        </header>
+
+        <main>
+            <h2>Seu Direito de Exclusão</h2>
+            <p>
+                Em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD)</strong> e com as diretrizes da Google Play Store, as <strong>Lojas Mundo Real</strong> garantem a você o direito de excluir, a qualquer momento, sua conta e todos os dados pessoais associados ao aplicativo <strong>Mundo Real</strong>.
+            </p>
+
+            <div class="danger-box">
+                <h3>⚠️ Atenção — Esta ação é permanente e irreversível</h3>
+                <p>Após a confirmação da exclusão, <strong>não será possível recuperar</strong> seu perfil, histórico de pedidos, endereços cadastrados ou saldo de moedas <strong>Realitos</strong> acumulado.</p>
+            </div>
+
+            <h2>O Que Será Excluído?</h2>
+            <p>Ao processar sua solicitação, removeremos permanentemente:</p>
+            <ul>
+                <li>Seus dados de perfil (nome, e-mail, telefone e CPF);</li>
+                <li>Todos os endereços de entrega cadastrados;</li>
+                <li>Seu histórico de pedidos e transações dentro do aplicativo;</li>
+                <li>Seu saldo e extrato de moedas <strong>Realitos</strong>;</li>
+                <li>Token de notificações push do seu dispositivo.</li>
+            </ul>
+
+            <div class="alert-box">
+                <h3>📋 O que poderá ser mantido?</h3>
+                <p>Registros fiscais e financeiros (notas fiscais emitidas) poderão ser mantidos pelo prazo exigido pela legislação tributária brasileira (normalmente 5 anos), conforme obrigação legal, independentemente do seu pedido de exclusão.</p>
+            </div>
+
+            <hr class="divider">
+
+            <h2>Como Solicitar a Exclusão</h2>
+            <p>A solicitação pode ser feita de duas formas:</p>
+
+            <ol class="step-list">
+                <li>
+                    <span>Clique no botão abaixo para enviar um e-mail pré-formatado para nossa equipe de suporte com o assunto <strong>"Exclusão de Conta — App Mundo Real"</strong>.</span>
+                </li>
+                <li>
+                    <span>Nossa equipe processará sua solicitação e enviará uma confirmação em até <strong>48 horas úteis</strong>.</span>
+                </li>
+                <li>
+                    <span>Após a confirmação, todos os seus dados elegíveis serão <strong>removidos permanentemente</strong> de nossos servidores.</span>
+                </li>
+            </ol>
+
+            <a
+                id="btn-solicitar-exclusao"
+                class="btn-delete"
+                href="mailto:daniel@lojasmundoreal.com.br?subject=Exclus%C3%A3o%20de%20Conta%20%E2%80%94%20App%20Mundo%20Real&body=Ol%C3%A1%2C%0A%0ASolicito%20a%20exclus%C3%A3o%20completa%20da%20minha%20conta%20e%20de%20todos%20os%20meus%20dados%20pessoais%20do%20aplicativo%20Mundo%20Real%20(Lojas%20Mundo%20Real).%0A%0AEntendo%20que%20esta%20a%C3%A7%C3%A3o%20%C3%A9%20permanente%20e%20irrevers%C3%ADvel.%0A%0AE-mail%20da%20conta%3A%20%5BPreencha%20aqui%20o%20seu%20e-mail%20cadastrado%5D%0A%0AAtenciosamente."
+            >
+                🗑️ Solicitar Exclusão da Minha Conta
+            </a>
+
+            <hr class="divider">
+
+            <h2>Dúvidas?</h2>
+            <p>
+                Se você tiver qualquer dúvida sobre o processo de exclusão ou sobre seus dados pessoais, entre em contato com nossa equipe pelo e-mail:
+            </p>
+            <p>📧 <a href="mailto:daniel@lojasmundoreal.com.br" class="btn-link">daniel@lojasmundoreal.com.br</a></p>
+            <p>
+                Para mais informações sobre como tratamos seus dados, consulte a nossa
+                <a href="./politica-privacidade.html" class="btn-link">Política de Privacidade</a>.
+            </p>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Lojas Mundo Real. Todos os direitos reservados.</p>
+            <p style="margin-top: 0.25rem;"><a href="https://lojasmundoreal.com.br" class="btn-link" target="_blank">Voltar para o site principal</a></p>
+        </footer>
+    </div>
+</body>
+</html>
